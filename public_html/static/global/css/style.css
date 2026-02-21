@@ -1876,29 +1876,25 @@ input[type="tel"] {
 
 input::-webkit-input-placeholder {
 	font-family: 'Montserrat', sans-serif;
-	color: #fff;
-	!important;
+	color: #fff !important;
 	font-weight: 500;
 }
 
 input::-moz-placeholder {
 	font-family: 'Montserrat', sans-serif;
-	color: #fff;
-	!important;
+	color: #fff !important;
 	font-weight: 500;
 }
 
 input:-moz-placeholder {
 	font-family: 'Montserrat', sans-serif;
-	color: #fff;
-	!important;
+	color: #fff !important;
 	font-weight: 500;
 }
 
 input:-ms-input-placeholder {
 	font-family: 'Montserrat', sans-serif;
-	color: #fff;
-	!important;
+	color: #fff !important;
 	font-weight: 500;
 }
 
@@ -3191,8 +3187,8 @@ animation
 	}
 
 	.b5-item img {
-		opacity: 0.2;
-		filter: grayscale(1);
+		opacity: 0.3;
+		/* filter: grayscale(1); */
 	}
 
 	.b5-item .item-content h3,
@@ -3751,8 +3747,7 @@ animation
 	}
 
 	.modal_container {
-		padding: 40px 15px;
-		10px rgba(0, 0, 0, 0.35);
+		padding: 40px 15px 10px rgba(0, 0, 0, 0.35);
 	}
 
 
@@ -3795,4 +3790,6 @@ animation
 	color: #ffffff !important;
 }
 
-/*****/
+#b1 .title {
+	margin-top: 40px;
+}
