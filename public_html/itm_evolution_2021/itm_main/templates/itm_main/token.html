@@ -1,0 +1,8 @@
+{{ token.value }}
+
+{% if request.user.is_superuser %}
+    <a class="btn btn-info" role="button" href="{% url 'admin:main_settings_change' token.id %}"
+       style="color: white; width: 44px;" target="_blank">
+        <img src="/static/global/img/ico-admin.png" alt="ico-admin" width="32px" height="32px">
+    </a>
+{% endif %}

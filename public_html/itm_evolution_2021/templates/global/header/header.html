@@ -1,0 +1,31 @@
+{% load static %}
+{% load itm_main_tags %}
+{% load main_tags %}
+{% load thumbnail %}
+
+<header>
+	<div class="flex-header">
+	    <a href="{% url 'main:index' %}" class="logo"><img src="{% static 'global/img/logo.svg' %}" alt="logo"></a>
+		<div class="header-link">
+            {% html_block header-phone %}
+		    <a href="tel: 84912559594" class="header-phone"><span class="phone-img"><img src="/static/global/img/phone.svg" alt="ico"></span><span class="phone-txt">+7 (4912) 55-95-94</span></a>
+			{% end_html_block %}
+            <ul class="nav">
+			    <li><a href="{% url 'main:index' %}" class="{% active_link 'main:index' %}">Главная</a></li>
+				<li><a href="{% url 'team:schedule' %}" class="{% active_link_child 'team:schedule' %}">Расписание</a></li>
+				<li><a href="{% url 'stock:stock' %}" class="{% active_link_child 'stock:stock' %}">Акции</a></li>
+				<li><a href="{% url 'news:news' %}" class="{% active_link_child 'news:news' %}">Новости</a></li>
+				<li><a href="{% url 'team:team' %}" class="{% active_link_child 'team:team' %}">Наша команда</a></li>
+				<li><a href="{% url 'team:workout' %}" class="{% active_link_child 'team:workout' %}">Тренировки</a></li>
+				<li><a href="{% url 'main:contact' %}" class="{% active_link 'main:contact' %}">Контакты</a></li>
+		    </ul>
+		    <ul class="nav-social">
+                {% social_link_show as social_link %}
+                {% for cur_social_link in social_link %}
+                    <li><a href="{{ cur_social_link.link }}" target="_blank"><img src="{{ cur_social_link.image.url }}" alt="{{ cur_social_link.title }}"></a></li>
+                {% endfor %}
+            </ul>
+		    <div class="burger"><span></span></div>
+	    </div>
+    </div>
+</header>

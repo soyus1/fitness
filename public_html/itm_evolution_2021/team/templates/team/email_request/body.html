@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Форма "Оставить заявку (стать тренером)" на сайте "{{ site_name }}"</title>
+</head>
+<body>
+    <p>На сайте "{{ site_name }}" была заполнена форма "Оставить заявку (стать тренером)".</p><br/>
+    <p>Пользователем была оставлена следующая информация:</p>
+    <ul>
+        <li><strong>ФИО:</strong> {{ form.name }}</li>
+        <li><strong>Телефон:</strong> {{ form.phone }}</li>
+    </ul>
+</body>
+</html>

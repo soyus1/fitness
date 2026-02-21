@@ -1,0 +1,196 @@
+{% extends 'global/main_preset.html' %}
+{% load static %}
+{% load itm_main_tags %}
+{% load main_tags %}
+{% load news_tags %}
+{% load stock_tags %}
+{% load thumbnail %}
+
+{% block Title %}Главная страница - {{ block.super }}{% endblock Title %}
+{% block Description %}Главная страница - {{ block.super }}{% endblock Description %}
+{% block Keywords %}Главная страница - {{ block.super }}{% endblock Keywords %}
+{% block OgTitle %}Главная страница - {{ block.super }}{% endblock OgTitle %}
+{% block OgDescription %}Главная страница - {{ block.super }}{% endblock OgDescription %}
+{% block OgKeywords %}{% static 'global/img/og_image.jpg' %}{% endblock OgKeywords %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block end_scripts %}
+    <script>
+    var x = 0;
+    $(window).scroll(function() {
+
+      var oTop = $('#stats-counter').offset().top - window.innerHeight;
+      if (x == 0 && $(window).scrollTop() > oTop) {
+        $('.stats-counter-value').each(function() {
+          var $this = $(this),
+              countTo = $this.attr('data-count');
+          $({
+            countNum: $this.text()
+          }).animate({
+            countNum: countTo
+          },
+                     {
+            duration: 2000,
+            easing: 'swing',
+            step: function() {
+              $this.text(Math.floor(this.countNum));
+            },
+            complete: function() {
+              $this.text(this.countNum);
+            }
+          });
+        });
+        x = 1;
+      }
+    });
+    </script>
+{% endblock %}
+
+{% block content %}
+<!--<canvas id="canvas-webgl" class="canvas"></canvas>-->
+
+<section id="intro">
+	<video class="video-desc" playsinline="" autoplay="true" loop="loop" muted="muted" volume="0">
+	  <source src="/static/global/video/video-desc.webm" type="video/webm">
+		<source src="/static/global/video/video-desc.mp4" type="video/mp4">
+	</video>
+	<video class="video-mob" playsinline="" autoplay="true" loop="loop" muted="muted" volume="0">
+	  <source src="/static/global/video/video-mob.webm" type="video/webm">
+		<source src="/static/global/video/video-mob.mp4" type="video/mp4">
+	</video>
+</section>
+
+{% comment %}
+<section id="intro"> 
+	<div class="intro-slider">
+        {% for slide in slide_list %}
+	    <div class="intro-item">
+		    <img class="slider-bg" src="{{ slide.image.url }}" alt="img">
+		    <div class="container">
+			    <div class="slider-content">
+			        <h2>{{ slide.title }}</h2>
+					<p>{{ slide.subtitle|safe }}</p>
+			        <a href="{{ slide.link }}" class="btn"><span>Подробнее</span></a>
+                    {% if request.user.is_superuser %}
+                        <a class="btn-admin" role="button"
+                           href="{% url 'admin:main_slide_change' slide.id %}"
+                           style="color: white;" target="_blank">
+                           <img src="{% static 'global/img/ico-admin.png' %}" alt="ico-admin">
+                        </a>
+                    {% endif %}
+	      	    </div>
+	      	</div>
+		</div>
+        {% endfor %}
+	</div>   
+</section>
+{% endcomment %}
+
+<section id="b5" class="section">
+    <div class="container">
+	    <div class="title-group">
+	        <h2 class="title">{% get_string_block "index-stock-title" "акции" %}</h2>
+		    <a href="{% url 'stock:stock' %}" class="btn"><span>Смотреть все</span></a>
+		</div>
+		<div class="b5-grid">
+            {% stock_show as stock_list %}
+            {% for cur_stock in stock_list %}
+		    <a href="{% url 'stock:stock-detail' cur_stock.slug %}" class="b5-item">
+			    <img class="lazyload" data-src="{{ cur_stock.image_preview.url }}" alt="{{ cur_stock.title }}">
+				<div class="item-content">
+			        <h3>{{ cur_stock.title }}</h3>
+				    <p>{{ cur_stock.announcement|safe }}</p>
+			        <span class="btn"><span>Подробнее</span></span>
+				</div>
+			</a>
+            {% endfor %}
+        </div>
+    </div> 
+</section>
+
+<section id="b4" class="section">
+    <div class="container">
+	    <h2 class="title">{% get_string_block "index-news-title" "Что нового" %}</h2>
+		<div class="news-slider">
+            {% news_show as news_list %}
+            {% for cur_news in news_list %}
+		    <a href="{% url 'news:news-detail' cur_news.slug %}" class="b5-item">
+			    <img data-lazy="{{ cur_news.image_preview.url }}" alt="{{ cur_news.title }}">
+				<div class="item-content">
+			        <h3>{{ cur_news.title }}</h3>
+				    {{ cur_news.announcement|safe }}
+			        <span class="btn"><span>Подробнее</span></span>
+				</div>
+			</a>
+            {% endfor %}
+        </div>
+    </div> 
+</section>
+
+<section id="b1">
+    <div class="b1-flex">
+	    <img class="b1-bg lazyload" data-src="{% static 'global/img/b1-bg-new.jpg' %}" alt="О НАШЕМ КЛУБЕ">
+        <div class="b1-content">
+            {% html_block index-about-txt %}
+		    <h2 class="title">О НАШЕМ КЛУБЕ</h2>
+			<p>«Новай Эволюция» – это первый современный фитнес-клуб нового формата, соответствующий требованиям и ожиданиям жителей самого динамично развивающегося района г. Рязани.</p><p>Наш клуб сочетает в себе максимально удобное расположение, комфортные условия для занятий, предлагает полный спектр фитнес-услуг на высоком уровне и предоставляет уникальную возможность погрузиться в атмосферу здорового образа жизни каждому человеку.</p><p>Философия нашего бренда заключается в том, что человек сам создает свою жизнь, а наш клуб и регулярные занятия в нем помогают сделать ее наполненной радостью, красотой, здоровьем и благополучием. Поэтому наш девиз звучит так: «Создай свое будущее».</p>	
+		    {% end_html_block %}
+        </div>
+		<div id="stats-counter">
+            <div class="stats-col">
+                <p class="stats-counter-value" data-count="1500">0</p>
+                <p class="stats-title">М<sup>2</sup></p>
+            </div>
+		</div>
+    </div> 
+</section>
+
+<section id="b2" class="section">
+    <img class="b2-bg lazyload" data-src="{% static 'global/img/b2-bg.jpg' %}" alt="ПРЕИМУЩЕСТВА">
+    <div class="container">
+	    <div class="b2-flex">
+	        <div class="b2-list">
+                {% for characteristic in characteristics_list %}
+	            <div class="b2-item"> 
+                    <div class="b2-img"> 
+                        <img src="{{ characteristic.image.url }}" alt="img">
+                    </div>
+					<p class="b2-txt">{{ characteristic.title }}</p>
+                    {% if request.user.is_superuser %}
+                        <a class="btn-admin" role="button"
+                           href="{% url 'admin:main_characteristics_change' characteristic.id %}"
+                           style="color: white;" target="_blank">
+                           <img src="{% static 'global/img/ico-admin.png' %}" alt="ico-admin">
+                        </a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div> 
+</section>
+
+<section id="b3" class="section">
+    <img class="b3-bg lazyload" data-src="{% static 'global/img/b3-bg.jpg' %}" alt="НАШИ ПРЕИМУЩЕСТВА">
+    <div class="container">
+	    <h2 class="title">{% get_string_block "index-benefits-title" "НАШИ ПРЕИМУЩЕСТВА" %}</h2>
+	    <div class="b3-grid">
+            {% for benefit in benefits_list %}
+		    <div class="b3-item">
+                <p class="b3-num">{% if forloop.counter < 10 %}0{{ forloop.counter }}{% else %}{{ forloop.counter }}{% endif %}</p>
+				<p class="b3-txt">{{ benefit.title }}</p>
+                {% if request.user.is_superuser %}
+                    <a class="btn-admin" role="button"
+                       href="{% url 'admin:main_benefits_change' benefit.id %}"
+                       style="color: white;" target="_blank">
+                       <img src="{% static 'global/img/ico-admin.png' %}" alt="ico-admin">
+                    </a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div> 
+</section>
+{% endblock content %}

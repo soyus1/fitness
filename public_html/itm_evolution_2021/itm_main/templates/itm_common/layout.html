@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% load itm_common_tags %}
+    {% load static %}
+    {% smart_spaceless %}
+        {% load itm_main_tags %}
+        {% get_meta as meta_data %}
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta charset="UTF-8">
+        {# Блок для переопределения заголовка #}
+        {% block head %}
+            <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+            {% if meta_data %}
+                <title>{{ meta_data.title }}
+                    - {% get_only_string_block "global-site-name" "Коттеджный поселок «Раздолье»" %}</title>
+                <meta name="description" content="{{ meta_data.description }}"/>
+                <meta name="keywords" content="{{ meta_data.keywords }}"/>
+            {% else %}
+                <title>{% block Title %}
+                    {% get_only_string_block "global-site-name" "Коттеджный поселок «Раздолье»" %}{% endblock Title %}</title>
+                <meta name="description"
+                      content='{% block Description %}{% get_only_string_block "global-site-name" "Коттеджный поселок «Раздолье»" %}{% endblock Description %}'/>
+                <meta name="keywords" content='{% block Keywords %}{% get_only_string_block "global-site-name" "Коттеджный поселок «Раздолье»" %}{% endblock Keywords %}'/>
+            {% endif %}
+            <meta property="og:desсription"
+                  content="{% block OgTitle %}Коттеджный поселок «Раздолье»{% endblock OgTitle %}">
+            <meta property="og:title"
+                  content="{% block OgDescription %}Коттеджный поселок «Раздолье»{% endblock OgDescription %}">
+            <meta property="og:image"
+                  content="{% block OgKeywords %}{% static 'global/img/og_image.jpg' %}{% endblock OgKeywords %}">
+        {% endblock %}
+        {# Блок для стилей #}
+        {# Стандартные стили: #}
+        {% block global_stylesheets %}
+        {% endblock %}
+        {# Пользовательские стили: #}
+        {% block stylesheets %}
+        {% endblock stylesheets %}
+        {# Скрипты: #}
+        {% block global_head_scripts %}
+        {% endblock global_head_scripts %}
+        {# Пользовательские скрипты: #}
+        {% block head_scripts %}
+        {% endblock head_scripts %}
+    {% end_smart_spaceless %}
+    {{ form.media }}
+</head>
+<body id="{% block body_id %}{% endblock body_id %}" class="{% block body_class %}{% endblock body_class %}">
+{% smart_spaceless %}
+    {% block body %}
+    {% endblock body %}
+    {# Скрипты в конце страницы: #}
+    {# Стандартные: #}
+    {% block global_end_scripts %}
+    {% endblock global_end_scripts %}
+    {# Сторонние скрипты: #}
+    {% block end_scripts %}
+    {% endblock end_scripts %}
+{% end_smart_spaceless %}
+</body>
+</html>

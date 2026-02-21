@@ -1,0 +1,29 @@
+{% load static %}
+{% if is_paginated %}
+    {% load itm_common_tags %}
+
+    <ul>
+        {% if page_obj.has_previous %}
+            <li class="pagination-start"><a title="В начало" href="?page=1" class="hasTooltip pagenav">В начало</a></li>
+            <li class="pagination-prev"><a title="Назад" href="?page={{ page_obj.previous_page_number }}" class="hasTooltip pagenav">Назад</a></li>
+        {% else %}
+            <li class="pagination-start"><span class="pagenav">В начало</span></li>
+            <li class="pagination-prev"><span class="pagenav">Назад</span></li>
+        {% endif %}
+        {% for i in pages_range %}
+            {% if page_obj.number == i %}
+                <li><span class="pagenav">{{ i }}</span></li>
+            {% else %}
+                <li><a href="?{% url_replace 'page' i %}" class="pagenav">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <li class="pagination-next"><a title="Вперёд" href="?page={{ page_obj.next_page_number }}" class="hasTooltip pagenav">Вперёд</a></li>
+            <li class="pagination-end"><a title="В конец" href="?page={{ num_pages }}" class="hasTooltip pagenav">В конец</a></li>
+        {% else %}
+            <li class="pagination-next"><span class="pagenav">Вперёд</span></li>
+            <li class="pagination-end"><span class="pagenav">В конец</span></li>
+        {% endif %}
+    </ul>
+
+{% endif %}

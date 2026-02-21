@@ -1,0 +1,9 @@
+<a data-fancybox="fancy-images" class="fancybox" href="{{ value.url }}">
+<img src="{{ value.url }}" alt="" {% if id %}id="{{ id }}"{% endif %} {% if class %}class="{{ class }}"{% endif %}>
+</a>
+
+{% if request.user.is_superuser %}
+        <a class="btn btn-info" role="button" href="{{ admin_path }}" style="color: white; margin-top: 35px; width: 44px;" target="_blank">
+        <img src="/static/global/img/ico-admin.png" alt="ico-admin" width="32px" height="32px">
+        </a>
+{% endif %}

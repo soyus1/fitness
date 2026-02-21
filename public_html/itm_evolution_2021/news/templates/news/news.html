@@ -1,0 +1,40 @@
+{% extends 'global/main_preset.html' %}
+{% load static %}
+{% load itm_main_tags %}
+{% load main_tags %}
+{% load thumbnail %}
+
+{% block Title %}Новости - {{ block.super }}{% endblock Title %}
+{% block Description %}Новости- {{ block.super }}{% endblock Description %}
+{% block Keywords %}Новости - {{ block.super }}{% endblock Keywords %}
+{% block OgTitle %}Новости - {{ block.super }}{% endblock OgTitle %}
+{% block OgDescription %}Новости - {{ block.super }}{% endblock OgDescription %}
+{% block OgKeywords %}{% static 'global/img/og_image.jpg' %}{% endblock OgKeywords %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block end_scripts %}
+{% endblock %}
+
+{% block content %}
+<canvas id="canvas-webgl" class="canvas"></canvas>
+
+<section id="event">
+    <div class="container">
+	    <h1 class="title">{% get_string_block "news-title" "Новости" %}</h1>
+		<div class="b5-grid">
+            {% for cur_news in news_list %}
+		    <a href="{% url 'news:news-detail' cur_news.slug %}" class="b5-item">
+			    <img class="lazyload" data-src="{{ cur_news.image_preview.url }}" alt="{{ cur_news.title }}">
+				<div class="item-content">
+			        <h3>{{ cur_news.title }}</h3>
+				    {{ cur_news.announcement|safe }}
+			        <span class="btn"><span>Подробнее</span></span>
+				</div>
+			</a>
+            {% endfor %}
+        </div>
+    </div> 
+</section>
+{% endblock content %}

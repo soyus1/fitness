@@ -1,0 +1,40 @@
+{% extends 'global/main_preset.html' %}
+{% load static %}
+{% load itm_main_tags %}
+{% load main_tags %}
+{% load thumbnail %}
+
+{% block Title %}Тренировки - {{ block.super }}{% endblock Title %}
+{% block Description %}Тренировки- {{ block.super }}{% endblock Description %}
+{% block Keywords %}Тренировки - {{ block.super }}{% endblock Keywords %}
+{% block OgTitle %}Тренировки - {{ block.super }}{% endblock OgTitle %}
+{% block OgDescription %}Тренировки - {{ block.super }}{% endblock OgDescription %}
+{% block OgKeywords %}{% static 'global/img/og_image.jpg' %}{% endblock OgKeywords %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block end_scripts %}
+{% endblock %}
+
+{% block content %}
+<canvas id="canvas-webgl" class="canvas"></canvas>
+
+<section id="workout">
+    <div class="container">
+	    <h1 class="title">Тренировки</h1>
+		<div class="workout-grid">
+            {% for workout in workout_list %}
+		    <a href="{% url 'team:workout-detail' workout.slug %}" class="workout-item">
+			    <img class="lazyload" data-src="{{ workout.image_preview.url }}" alt="img">
+				<div class="workout-content">
+				    <h3>{{ workout.title }}</h3>
+				    <p>{{ workout.announcement|safe }}{% if workout.note %}<span>{{ workout.note }}</span>{% endif %}</p>
+			        <span class="btn"><span>Подробнее</span></span>
+				</div>
+			</a>
+            {% endfor %}
+        </div>
+    </div> 
+</section>
+{% endblock content %}

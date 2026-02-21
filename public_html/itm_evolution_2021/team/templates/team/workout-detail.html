@@ -1,0 +1,44 @@
+{% extends 'global/main_preset.html' %}
+{% load static %}
+{% load itm_main_tags %}
+{% load main_tags %}
+{% load thumbnail %}
+
+{% block Title %}{{ workout.title }} - {{ block.super }}{% endblock Title %}
+{% block Description %}{{ workout.title }}- {{ block.super }}{% endblock Description %}
+{% block Keywords %}{{ workout.title }} - {{ block.super }}{% endblock Keywords %}
+{% block OgTitle %}{{ workout.title }} - {{ block.super }}{% endblock OgTitle %}
+{% block OgDescription %}{{ workout.title }} - {{ block.super }}{% endblock OgDescription %}
+{% block OgKeywords %}{{ team.workout.url }}{% endblock OgKeywords %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block end_scripts %}
+{% endblock %}
+
+{% block content %}
+<canvas id="canvas-webgl" class="canvas"></canvas>
+
+<section id="workout-detail">
+    {% if workout.image %}
+    <img class="workout-bg" src="{{ workout.image.url }}" alt="{{ workout.title }}">
+    {% else %}
+    <img class="workout-bg" src="{{ workout.image_preview.url }}" alt="{{ workout.title }}">
+    {% endif %}
+    <div class="container">
+	    <div class="workout-txt">
+            {% if request.user.is_superuser %}
+                <a class="btn-admin" role="button"
+                   href="{% url 'admin:team_workout_change' workout.id %}"
+                   style="color: white;" target="_blank">
+                   <img src="{% static 'global/img/ico-admin.png' %}" alt="ico-admin">
+                </a>
+            {% endif %}
+	        <h1 class="title">{{ workout.title }}</h1>
+		    {{ workout.body|safe }}
+			<a href="{% url 'team:workout' %}" class="btn btn-back"><span>Назад</span></a>
+		</div> 
+    </div> 
+</section>
+{% endblock content %}

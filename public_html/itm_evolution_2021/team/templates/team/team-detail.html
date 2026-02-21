@@ -1,0 +1,49 @@
+{% extends 'global/main_preset.html' %}
+{% load static %}
+{% load itm_main_tags %}
+{% load main_tags %}
+{% load thumbnail %}
+
+{% block Title %}{{ team.title }} - {{ block.super }}{% endblock Title %}
+{% block Description %}{{ team.title }}- {{ block.super }}{% endblock Description %}
+{% block Keywords %}{{ team.title }} - {{ block.super }}{% endblock Keywords %}
+{% block OgTitle %}{{ team.title }} - {{ block.super }}{% endblock OgTitle %}
+{% block OgDescription %}{{ team.title }} - {{ block.super }}{% endblock OgDescription %}
+{% block OgKeywords %}{{ team.image_preview.url }}{% endblock OgKeywords %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" type="text/css" href="{% static 'global/css/scroll.css' %}"/>
+{% endblock %}
+
+{% block end_scripts %}
+    <script defer type="text/javascript" src="{% static 'global/js/scrollbar.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<canvas id="canvas-webgl" class="canvas"></canvas>
+
+<section id="team-detail">
+    <div class="container">
+		<div class="detail-flex">
+            {% if team.image %}
+            <img class="detail-img" src="{{ team.image.url }}" alt="{{ team.title }}">
+            {% else %}
+            <img class="detail-img" src="{{ team.image_preview.url }}" alt="{{ team.title }}">
+            {% endif %}
+		    <div class="detail-txt scroll-block">
+			    <p><span>{{ team.position }}</span></p>
+		        <h1 class="title">{{ team.title }}</h1>
+                {% if request.user.is_superuser %}
+                    <a class="btn-admin" role="button"
+                       href="{% url 'admin:team_team_change' team.id %}"
+                       style="color: white;" target="_blank">
+                       <img src="{% static 'global/img/ico-admin.png' %}" alt="ico-admin">
+                    </a>
+                {% endif %}
+				{{ team.body|safe }}
+				<a href="{% url 'team:team' %}" class="btn btn-back"><span>Назад</span></a>
+			</div>
+        </div>
+    </div> 
+</section>
+{% endblock content %}

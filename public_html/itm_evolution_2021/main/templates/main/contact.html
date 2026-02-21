@@ -1,0 +1,80 @@
+{% extends 'global/main_preset.html' %}
+{% load static %}
+{% load itm_main_tags %}
+{% load main_tags %}
+{% load thumbnail %}
+
+{% block Title %}Контакты - {{ block.super }}{% endblock Title %}
+{% block Description %}Контакты- {{ block.super }}{% endblock Description %}
+{% block Keywords %}Контакты - {{ block.super }}{% endblock Keywords %}
+{% block OgTitle %}Контакты - {{ block.super }}{% endblock OgTitle %}
+{% block OgDescription %}Контакты - {{ block.super }}{% endblock OgDescription %}
+{% block OgKeywords %}{% static 'global/img/og_image.jpg' %}{% endblock OgKeywords %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" type="text/css" href="{% static 'global/css/scroll.css' %}"/>
+{% endblock %}
+
+{% block end_scripts %}
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=ce37befc-33e1-46c7-a06f-b107274e87fe" type="text/javascript"></script>
+    <script async type="text/javascript" src="{% static 'global/js/contact.js' %}"></script>
+    <script type="text/javascript" src="{% static 'global/js/scrollbar.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<section id="contact">
+    <div id="map"></div>
+    <div class="contact-info">
+        <h1>{% get_string_block "contacts-title" "Контакты" %}</h1>
+        <div class="contact-list">
+             <div class="contact-item">
+			    <div class="contact-img"><img src="{% static 'global/img/home.svg' %}" alt="home"></div>
+                 {% html_block contacts-address-txt %}
+				 <p>г. Рязань, р-он Дашково-Песочня, ул. Васильевская, д. 7</p>
+                 {% end_html_block %}
+		    </div>
+			<div class="contact-item">
+			    <div class="contact-img"><img src="{% static 'global/img/phone.svg' %}" alt="phone"></div>
+                {% html_block contacts-phone-txt %}
+				<a href="tel: 84912559594">+7 (4912) 55-95-94</a>
+                {% end_html_block %}
+			</div>
+			<div class="contact-item">
+			    <div class="contact-img"><img src="{% static 'global/img/mail.svg' %}" alt="mail"></div>
+                {% html_block contacts-email-txt %}
+				<a href="mailto: sales@evolution-fitness.ru">sales@evolution-fitness.ru</a>
+                {% end_html_block %}
+			</div>
+        </div>
+		<div class="time-list">
+		    <h3>{% get_string_block "contacts-worktime-title" "РЕЖИМ РАБОТЫ" %}</h3>
+		    <div class="contact-item">
+			    <div class="contact-img"><img src="{% static 'global/img/time.svg' %}" alt="ico"></div>
+                {% html_block contacts-worktime-txt %}
+				<ul>
+				    <li>ПН-ПТ: С 7:00 до 23:00</li> <li>СБ-ВС: С 9:00 до 22:00</li>
+				</ul>
+                {% end_html_block %}
+			</div>
+			{% comment %}
+			<div class="time-detail">
+			    <div class="time-item">
+			        <div class="contact-img time-img"><img src="{% static 'global/img/hand.svg' %}" alt="ico"></div><p>{% get_string_block "contacts-worktime-w-title" "Режим работы в праздники" %}</p>
+				</div>
+			</div>
+			{% endcomment %}
+		</div>
+		<div class="hiddden-container">
+		    <div class="close-hidden"><img src="{% static 'global/img/close2.svg' %}" alt="ico"></div>
+			<h3>{% get_string_block "contacts-worktime-w-title" "Режим работы в праздники" %}</h3>
+		    <div class="scroll-block">
+                {% html_block contacts-worktime-w-txt %}
+		        <ul>
+		            <li><span>31.12</span> - с 9.00 до 14.00</li><li><span>01.01</span> - выходной</li><li><span>02.01</span> - выходной </li><li><span>03.01</span> - выходной</li> <li><span>04.01</span> - с 9.00 до 22.00</li><li><span>05.01</span> - с 9.00 до 22.00</li><li><span>06.01</span> - с 9.00 до 14.00</li><li><span>07.01</span> - выходной</li><li><span>09.01</span> - с 9.00 до 22.00</li> <li><span>10.01</span> - с 9.00 до 22.00</li>	
+		        </ul>
+                {% end_html_block %}
+		    </div>
+		</div>
+	</div>
+</section>
+{% endblock content %}

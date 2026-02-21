@@ -1,0 +1,160 @@
+{% extends 'global/main_preset.html' %}
+{% load static %}
+{% load itm_main_tags %}
+{% load main_tags team_tags %}
+{% load thumbnail %}
+
+{% block Title %}РАСПИСАНИЕ ЗАНЯТИЙ - {{ block.super }}{% endblock Title %}
+{% block Description %}РАСПИСАНИЕ ЗАНЯТИЙ- {{ block.super }}{% endblock Description %}
+{% block Keywords %}РАСПИСАНИЕ ЗАНЯТИЙ - {{ block.super }}{% endblock Keywords %}
+{% block OgTitle %}РАСПИСАНИЕ ЗАНЯТИЙ - {{ block.super }}{% endblock OgTitle %}
+{% block OgDescription %}РАСПИСАНИЕ ЗАНЯТИЙ - {{ block.super }}{% endblock OgDescription %}
+{% block OgKeywords %}{% static 'global/img/og_image.jpg' %}{% endblock OgKeywords %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" type="text/css" href="{% static 'global/css/scroll.css' %}"/>
+{% endblock %}
+
+{% block end_scripts %}
+    <script type="text/javascript" src="{% static 'global/js/filter.js' %}"></script>
+    <script type="text/javascript" src="{% static 'global/js/scrollbar.js' %}"></script>
+    <script type="text/javascript" async="async" id="mobifitness_personal_widget_script_ywk" src="//mobifitness.ru/personal-widget/js/code.js" data-div="mf_schedule_widget_cont_ywk" data-test="0" data-debug="0" data-domain="mobifitness.ru" data-code="150260" data-version="v6" data-type="schedule" data-language="" data-club="5241"></script>
+{% endblock %}
+
+{% block content %}
+<canvas id="canvas-webgl" class="canvas"></canvas>
+
+<section id="schedule">
+    <img class="schedule-bg" src="{% static 'global/img/schedule-bg.jpg' %}" alt="img">
+    <div class="container">
+	    <h1 class="title">РАСПИСАНИЕ ЗАНЯТИЙ</h1>
+	    {% comment %}
+	    <ul class="schedule-nav">
+		    <li class="btn"><span>{{ monday_date|date:"d E" }} - {{ sunday_date|date:"d E" }}</span></li>
+			<li class="btn"><span>{{ next_monday_date|date:"d E" }} - {{ next_sunday_date|date:"d E" }}</span></li>
+		</ul>
+		{% if request.user.is_superuser %}
+            <a class="btn-admin" role="button"
+               href="/admin/team/schedule/"
+               style="color: white;" target="_blank">
+               Редактировать расписание
+            </a>
+        {% endif %}
+		{% endcomment %}
+		<div class="schedule-container">
+		    {% comment %}
+		    <form class="filter-grid">
+				<span class="filter-close"></span>
+				<div class="filter-list">
+					<div class="catalog-filters">
+				        <span class="select cd-filter-content cd-filters" id="select1">
+					        <select class="wide">
+                                <option class="filter" data-filter="" data-display="Все направления">Все направления</option>
+                                {% for direction in directions_list %}
+                                <option class="filter" data-filter=".f1-{{ direction.id }}">{{ direction.title }}</option>
+                                {% endfor %}
+                            </select>
+				        </span>
+			        </div>
+				</div>
+				<div class="filter-list">
+					<div class="catalog-filters">
+				        <span class="select cd-filter-content cd-filters" id="select2">
+					        <select class="wide">
+                                <option class="filter" data-filter="" data-display="Все занятия">Все занятия</option>
+                                {% for cur_class in classes_list %}
+                                <option class="filter" data-filter=".f2-{{ cur_class.id }}">{{ cur_class.title }}</option>
+                                {% endfor %}
+                            </select>
+				        </span>
+			        </div>
+				</div>
+				<div class="filter-list">
+					<div class="catalog-filters">
+				        <span class="select cd-filter-content cd-filters" id="select3">
+					        <select class="wide">
+                                <option class="filter" data-filter="" data-display="Все инструкторы">Все инструкторы</option>
+                                {% for instructor in instructors_list %}
+                                <option class="filter" data-filter=".f3-{{ instructor.id }}">{{ instructor.title }}</option>
+                                {% endfor %}
+                            </select>
+				        </span>
+			        </div>
+				</div>
+				<button id="btn-all" class="btn"><span>Сбросить</span></button>
+			</form>
+	        <div class="schedule-for">
+	            <div class="schedule-item">
+				    <div class="schedule-table">
+					    <div class="table-column"> 
+					        <div class="table-item item-header">
+							    <img class="table-ico" src="{% static 'global/img/clock.svg' %}" alt="img">
+				            </div>
+                            {% for time in schedule_time %}
+                            {% time_show time monday_date sunday_date as time_show %}
+                            {% if time_show %}
+							<div class="table-item"><p>{{ time.title }}</p></div>
+                            {% endif %}
+                            {% endfor %}
+					    </div>
+                         {% for day in week_dates %}
+                            <div class="table-column">
+                                {% day_active day as cur_day %}
+                                <div class="table-item item-header{% if cur_day %} active{% endif %}">
+                                    <p>{{ day.date|date:"D" }}. {{ day.date|date:"d.m" }}</p>
+                                </div>
+                                {% for time in schedule_time %}
+                                {% time_show time monday_date sunday_date as time_show %}
+                                {% if time_show %}
+                                    <div class="table-item">
+                                    {% schedule_show day time as schedule_item %}
+                                    {% for schedule in schedule_item %}
+                                        <p class="mix  hall{{ schedule.hall.id }} f1-{{ schedule.classes.direction.id }} f2-{{ schedule.classes.id }} f3-{{ schedule.instructor.id }}"><span class="name">{{ schedule.classes.title }}</span> {{ schedule.instructor }} <span class="num">{{ schedule.hall }}</span><span class="time-hidden">{{ schedule.time }}</span></p>
+                                    {% endfor %}
+                                    </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+	                </div>
+	            </div>
+			    <div class="schedule-item">
+				    <div class="schedule-table">
+					    <div class="table-column"> 
+					        <div class="table-item item-header">
+							    <img class="table-ico" src="{% static 'global/img/clock.svg' %}" alt="img">
+				            </div>
+                            {% for time in schedule_time %}
+                            {% time_show time next_monday_date next_sunday_date as time_show %}
+                            {% if time_show %}
+							<div class="table-item"><p>{{ time.title }}</p></div>
+                             {% endif %}
+                            {% endfor %}
+					    </div>
+						{% for day in next_week_dates %}
+                            <div class="table-column">
+                                <div class="table-item item-header">
+                                    <p>{{ day.date|date:"D" }}. {{ day.date|date:"d.m" }}</p>
+                                </div>
+                                {% for time in schedule_time %}
+                                {% time_show time next_monday_date next_sunday_date as time_show %}
+                                {% if time_show %}
+                                    <div class="table-item">
+                                    {% schedule_show day time as schedule_item %}
+                                    {% for schedule in schedule_item %}
+                                        <p class="mix  hall{{ schedule.hall.id }} f1-{{ schedule.classes.direction.id }} f2-{{ schedule.classes.id }} f3-{{ schedule.instructor.id }}"><span class="name">{{ schedule.classes.title }}</span> {{ schedule.instructor }} <span class="num">{{ schedule.hall }}</span><span class="time-hidden">{{ schedule.time }}</span></p>
+                                    {% endfor %}
+                                    </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+	                </div>
+	            </div>
+		    </div>
+		    {% endcomment %}
+		    <div id="mf_schedule_widget_cont_ywk"></div>
+		</div>
+    </div> 
+</section>
+{% endblock content %}

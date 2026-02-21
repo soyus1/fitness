@@ -1,0 +1,71 @@
+{% extends 'global/main_preset.html' %}
+{% load static %}
+{% load itm_main_tags %}
+{% load main_tags %}
+{% load thumbnail %}
+
+{% block Title %}{{ news.title }} - {{ block.super }}{% endblock Title %}
+{% block Description %}{{ news.title }}- {{ block.super }}{% endblock Description %}
+{% block Keywords %}{{ news.title }} - {{ block.super }}{% endblock Keywords %}
+{% block OgTitle %}{{ news.title }} - {{ block.super }}{% endblock OgTitle %}
+{% block OgDescription %}{{ news.title }} - {{ block.super }}{% endblock OgDescription %}
+{% block OgKeywords %}{{ news.image_preview.url }}{% endblock OgKeywords %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" type="text/css" href="{% static 'global/css/scroll.css' %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'global/css/lightgallery.css' %}"/>
+{% endblock %}
+
+{% block end_scripts %}
+    <script defer type="text/javascript" src="{% static 'global/js/scrollbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'global/js/lightgallery.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<canvas id="canvas-webgl" class="canvas"></canvas>
+
+<section id="event-detail">
+    <div class="container">
+		<div class="detail-flex">
+		    <div class="detail-txt scroll-block">
+		        <h1 class="title">{{ news.title }}</h1>
+                {% if request.user.is_superuser %}
+                    <a class="btn-admin" role="button"
+                       href="{% url 'admin:news_news_change' news.id %}"
+                       style="color: white;" target="_blank">
+                       <img src="{% static 'global/img/ico-admin.png' %}" alt="ico-admin">
+                    </a>
+                {% endif %}
+				{{ news.body|safe }}
+				<a href="{% url 'news:news' %}" class="btn btn-back"><span>Назад</span></a>
+			</div>
+            {% if news.image %}
+            <img class="detail-img" src="{{ news.image.url }}" alt="{{ news.title }}">
+            {% else %}
+            <img class="detail-img" src="{{ news.image_preview.url }}" alt="{{ news.title }}">
+            {% endif %}
+        </div>
+    </div> 
+</section>
+{% if imgs_news_list %}
+<section id="event-gallery" class="section">
+    <div class="container">
+	    <div class="event-grid">
+            {% for cur_img in imgs_news_list %}
+		    <div class="event-item"><a href="{{ cur_img.image.url }}" data-rel="lightcase:1">
+			<img class="lazyload" data-src="{{ cur_img.image_preview.url }}" alt="{{ cur_img.title }}"></a></div>
+            {% endfor %}
+		</div>
+    </div> 
+</section>
+{% endif %}
+{% if news.id == 17 %}
+<section id="event-gallery" class="section">
+    <div class="container">
+	    <div class="event-grid">
+            <iframe width="100%" height="480" src="https://www.youtube.com/embed/mk1iB_5xiy0" title="«Total Evolution»" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		</div>
+    </div> 
+</section>
+{% endif %}
+{% endblock content %}

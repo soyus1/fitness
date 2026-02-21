@@ -1,0 +1,55 @@
+{% extends 'global/main_preset.html' %}
+{% load static %}
+{% load itm_main_tags %}
+{% load main_tags %}
+{% load thumbnail %}
+
+{% block Title %}Наша команда - {{ block.super }}{% endblock Title %}
+{% block Description %}Наша команда- {{ block.super }}{% endblock Description %}
+{% block Keywords %}Наша команда - {{ block.super }}{% endblock Keywords %}
+{% block OgTitle %}Наша команда - {{ block.super }}{% endblock OgTitle %}
+{% block OgDescription %}Наша команда - {{ block.super }}{% endblock OgDescription %}
+{% block OgKeywords %}{% static 'global/img/og_image.jpg' %}{% endblock OgKeywords %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block end_scripts %}
+    <script type="text/javascript" src="{% static 'global/js/validate.js' %}"></script>
+    <script type="text/javascript" src="{% static 'global/js/form.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<canvas id="canvas-webgl" class="canvas"></canvas>
+
+<section id="team">
+    <div class="container">
+	    <h1 class="title">Наша команда</h1>
+		<div class="team-grid">
+            {% for cur_team in team_list %}
+		    <a href="{% url 'team:team-detail' cur_team.slug %}" class="team-item">
+			    <img class="lazyload" data-src="{{ cur_team.image_preview.url }}" alt="img">
+				<div class="team-content">
+				    <p>{{ cur_team.position }}</p>
+			        <h3>{{ cur_team.title }}</h3>
+			        <span class="btn"><span>Подробнее</span></span>
+				</div>
+			</a>
+            {% endfor %}
+        </div>
+    </div> 
+</section>
+
+<section id="team-work">
+    <img class="work-bg" src="{% static 'global/img/work-bg.jpg' %}" alt="img">
+    <div class="container">
+	    <div class="work-flex">
+            {% html_block team-txt %}
+            <h2 class="title">ХОЧЕШЬ СТАТЬ ТРЕНЕРОМ ИЛИ ИНСТРУКТОРОМ В НАШЕЙ КОМАНДЕ?</h2>  
+            <p>Если ты хочешь развиваться сам, делать мир и людей вокруг себя лучше, если ты веришь, что ты и каждый человек должен быть здоровым и красивым, если ты хочешь работать в уникальном и перспективном клубе города, присылай свое резюме, мы будем рады, если ты присоединишься к нашей команде успешных и энергичных людей.</p>
+            {% end_html_block %}
+            <div class="btn modal-trigger" data-modal="feed"><span>Подать заявку</span></div>
+		</div>
+    </div> 
+</section>
+{% endblock content %}

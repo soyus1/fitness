@@ -1,0 +1,25 @@
+<div class="modal" id="feed">
+    <div class="modal-sandbox"></div>
+    <div class="modal-box">
+        <div class="modal-body">
+		    <div class="modal_container">
+	            <div class="close-modal"><img src="{% static 'global/img/close2.svg' %}" alt="img"></div>
+			    <form id="contactform" action="{% url 'team:requestview-frm' %}" method="post" class="form" enctype="multipart/form-data">
+                    {% csrf_token %}
+			        <h2>Оставить заявку</h2>
+					<div class="form-group">
+			            <input type="text" placeholder="Как вас зовут? *" name="name" required="required">
+				    </div>
+			        <div class="form-group">
+			            <input type="tel" placeholder="Номер телефона *" name="phone" required="required">
+				    </div>
+				    <div class="agreement">
+			            <input type="checkbox" id="agreement" class="checkbox" name="agreement" required="required" checked>
+			            <label for="agreement" class="agrement-txt">Нажимая кнопку «Оставить заявку», я даю свое согласие на обработку моих персональных данных, в соответствии с Федеральным законом от 27.07.2006 года №152-ФЗ «О персональных данных», на условиях и для целей, определенных в Согласии на обработку персональных данных</label>
+			        </div>
+                    <button name="submit" type="submit" class="btn" value="оставить заявку"><span>оставить заявку</span></button>
+                </form>
+		    </div>
+        </div>
+    </div>
+</div>

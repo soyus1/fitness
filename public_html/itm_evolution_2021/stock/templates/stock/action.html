@@ -1,0 +1,40 @@
+{% extends 'global/main_preset.html' %}
+{% load static %}
+{% load itm_main_tags %}
+{% load main_tags %}
+{% load thumbnail %}
+
+{% block Title %}Акции - {{ block.super }}{% endblock Title %}
+{% block Description %}Акции- {{ block.super }}{% endblock Description %}
+{% block Keywords %}Акции - {{ block.super }}{% endblock Keywords %}
+{% block OgTitle %}Акции - {{ block.super }}{% endblock OgTitle %}
+{% block OgDescription %}Акции - {{ block.super }}{% endblock OgDescription %}
+{% block OgKeywords %}{% static 'global/img/og_image.jpg' %}{% endblock OgKeywords %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block end_scripts %}
+{% endblock %}
+
+{% block content %}
+<canvas id="canvas-webgl" class="canvas"></canvas>
+
+<section id="event">
+    <div class="container">
+	    <h1 class="title">{% get_string_block "stock-title" "акции" %}</h1>
+		<div class="b5-grid">
+            {% for cur_stock in stock_list %}
+		    <a href="{% url 'stock:stock-detail' cur_stock.slug %}" class="b5-item">
+			    <img class="lazyload" data-src="{{ cur_stock.image_preview.url }}" alt="{{ cur_stock.title }}">
+				<div class="item-content">
+			        <h3>{{ cur_stock.title }}</h3>
+				    <p>{{ cur_stock.announcement|safe }}</p>
+			        <span class="btn"><span>Подробнее</span></span>
+				</div>
+			</a>
+            {% endfor %}
+        </div>
+    </div> 
+</section>
+{% endblock content %}

@@ -1,0 +1,48 @@
+{% extends 'global/main_preset.html' %}
+{% load static %}
+{% load itm_main_tags %}
+{% load main_tags %}
+{% load thumbnail %}
+
+{% block Title %}{{ stock.title }} - {{ block.super }}{% endblock Title %}
+{% block Description %}{{ stock.title }}- {{ block.super }}{% endblock Description %}
+{% block Keywords %}{{ stock.title }} - {{ block.super }}{% endblock Keywords %}
+{% block OgTitle %}{{ stock.title }} - {{ block.super }}{% endblock OgTitle %}
+{% block OgDescription %}{{ stock.title }} - {{ block.super }}{% endblock OgDescription %}
+{% block OgKeywords %}{{ stock.image_preview.url }}{% endblock OgKeywords %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" type="text/css" href="{% static 'global/css/scroll.css' %}"/>
+{% endblock %}
+
+{% block end_scripts %}
+    <script defer type="text/javascript" src="{% static 'global/js/scrollbar.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<canvas id="canvas-webgl" class="canvas"></canvas>
+
+<section id="event-detail">
+    <div class="container">
+		<div class="detail-flex">
+		    <div class="detail-txt scroll-block">
+		        <h1 class="title">{{ stock.title }}</h1>
+                {% if request.user.is_superuser %}
+                    <a class="btn-admin" role="button"
+                       href="{% url 'admin:stock_stock_change' stock.id %}"
+                       style="color: white;" target="_blank">
+                       <img src="{% static 'global/img/ico-admin.png' %}" alt="ico-admin">
+                    </a>
+                {% endif %}
+				{{ stock.body|safe }}
+				<a href="{% url 'stock:stock' %}" class="btn btn-back"><span>Назад</span></a>
+			</div>
+            {% if stock.image %}
+            <img class="detail-img" src="{{ stock.image.url }}" alt="{{ stock.title }}">
+            {% else %}
+            <img class="detail-img" src="{{ stock.image_preview.url }}" alt="{{ stock.title }}">
+            {% endif %}
+        </div>
+    </div> 
+</section>
+{% endblock content %}

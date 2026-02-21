@@ -1,0 +1,8 @@
+<img src="{{ value.url }}" alt="" {% if id %}id="{{ id }}"{% endif %} {% if class %}class="{{ class }}"{% endif %}
+     {% if width %}width="{{ width }}"{% endif %} {% if height %}height="{{ height }}"{% endif %} alt="img">
+
+{% if request.user.is_superuser %}
+    <a class="btn-admin" role="button" href="{{ admin_path }}" style="color: white; width: 44px;" target="_blank">
+        <img src="/static/global/img/ico-admin.png" alt="ico-admin" width="32px" height="32px">
+    </a>
+{% endif %}

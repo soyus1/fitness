@@ -1,0 +1,45 @@
+User-agent: Googlebot
+Disallow: /admin/
+Disallow: /index.html
+Allow: /static/*.css$
+Allow: /static/*.css?
+Allow: /static/*.js$
+Allow: /static/*.js?
+Allow: /static/*.gif
+Allow: /static/*.jpg
+Allow: /static/*.jpeg
+Allow: /static/*.png
+
+User-agent: Yandex
+Crawl-delay: 1
+Disallow: /admin/
+Disallow: /index.html
+Allow: /static/*.css$
+Allow: /static/*.css?
+Allow: /static/*.js$
+Allow: /static/*.js?
+Allow: /static/*.gif
+Allow: /static/*.jpg
+Allow: /static/*.jpeg
+Allow: /static/*.png
+
+Clean-param: utm_source&utm_medium&utm_campaign&utm_term&_openstat&gclid&yclid&ymclid&from&cid&frommarket&utm_content&page&searchword&searchphrase&Itemid&ordering&limit&tracking
+
+User-agent: *
+Crawl-delay: 1
+Disallow: /admin/
+Disallow: /index.html
+Allow: /static/*.css$
+Allow: /static/*.css?
+Allow: /static/*.js$
+Allow: /static/*.js?
+Allow: /static/*.gif
+Allow: /static/*.jpg
+Allow: /static/*.jpeg
+Allow: /static/*.png
+Disallow: /*?
+
+
+Host: evolution-fitness.ru
+
+sitemap: https://evolution-fitness.ru/sitemap.xml

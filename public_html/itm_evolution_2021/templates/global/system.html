@@ -1,0 +1,63 @@
+{% extends 'itm_common/layout.html' %}
+
+{% load static %}
+{% load itm_main_tags %}
+{% get_meta as meta_data %}
+
+{% block global_stylesheets %}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&amp;subset=cyrillic" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'global/css/style.css' %}?{% now "Y-m-d-H-i" %}"/>
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="{% static 'global/ico/favicon.png' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"
+          href="{% static 'global/ico/apple-touch-icon-144-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114"
+          href="{% static 'global/ico/apple-touch-icon-114-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72"
+          href="{% static 'global/ico/apple-touch-icon-72-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57"
+          href="{% static 'global/ico/apple-touch-icon-57-precomposed.png' %}">
+    {% if request.user.is_superuser %}
+        <style>
+            .btn-admin {
+                border: 1px solid #7777BB;
+                background-color: #B3B3E0;
+                padding: 5px;
+                color: white;
+                text-decoration: none;
+                z-index: 111111;
+            }
+
+            .message-sent {
+                background-color: #d5f7df;
+                border-color: #c1f5d1;
+                color: #024717;
+                padding: 0 10px;
+                margin: 2px 0;
+            }
+
+            .message-sent-error {
+                background-color: #f2dede;
+                border-color: #ebccd1;
+                color: #a94442;
+                padding: 10px;
+                margin: 10px 0;
+            }
+        </style>
+    {% endif %}
+{% endblock %}
+
+{% block global_head_scripts %}
+{% endblock %}
+
+{% block global_end_scripts %}
+    {% csrf_token %}
+    {{ block.super }}
+    <script src="{% static 'global/js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'global/js/slick.js' %}"></script>
+    <script src="{% static 'global/js/three.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'global/js/script.js' %}"></script>
+    <script type="text/javascript" src="{% static 'global/js/main.js' %}?{% now "Y-m-d-H-i" %}"></script>
+    <script async type="text/javascript" src="{% static 'global/js/jquery.lazy.min.js' %}"></script>
+{% endblock %}
