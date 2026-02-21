@@ -51,7 +51,25 @@
 {% block content %}
 <!--<canvas id="canvas-webgl" class="canvas"></canvas>-->
 
-<section id="intro">
+<section id="b1">
+    <div class="b1-flex">
+	    <img class="b1-bg lazyload" data-src="{% static 'global/img/b1-bg-new.jpg' %}" alt="О НАШЕМ КЛУБЕ">
+        <div class="b1-content">
+            {% html_block index-about-txt %}
+		    <h2 class="title">О НАШЕМ КЛУБЕ</h2>
+			<p>«Новай Эволюция» – это первый современный фитнес-клуб нового формата, соответствующий требованиям и ожиданиям жителей самого динамично развивающегося района г. Рязани.</p><p>Наш клуб сочетает в себе максимально удобное расположение, комфортные условия для занятий, предлагает полный спектр фитнес-услуг на высоком уровне и предоставляет уникальную возможность погрузиться в атмосферу здорового образа жизни каждому человеку.</p><p>Философия нашего бренда заключается в том, что человек сам создает свою жизнь, а наш клуб и регулярные занятия в нем помогают сделать ее наполненной радостью, красотой, здоровьем и благополучием. Поэтому наш девиз звучит так: «Создай свое будущее».</p>	
+		    {% end_html_block %}
+        </div>
+		<div id="stats-counter">
+            <div class="stats-col">
+                <p class="stats-counter-value" data-count="1500">0</p>
+                <p class="stats-title">М<sup>2</sup></p>
+            </div>
+		</div>
+    </div> 
+</section>
+
+{% comment %} <section id="intro">
 	<video class="video-desc" playsinline="" autoplay="true" loop="loop" muted="muted" volume="0">
 	  <source src="/static/global/video/video-desc.webm" type="video/webm">
 		<source src="/static/global/video/video-desc.mp4" type="video/mp4">
@@ -60,7 +78,7 @@
 	  <source src="/static/global/video/video-mob.webm" type="video/webm">
 		<source src="/static/global/video/video-mob.mp4" type="video/mp4">
 	</video>
-</section>
+</section> {% endcomment %}
 
 {% comment %}
 <section id="intro"> 
@@ -87,6 +105,32 @@
 	</div>   
 </section>
 {% endcomment %}
+
+
+<section id="b2" class="section">
+    <img class="b2-bg lazyload" data-src="{% static 'global/img/b2-bg.jpg' %}" alt="ПРЕИМУЩЕСТВА">
+    <div class="container">
+	    <div class="b2-flex">
+	        <div class="b2-list">
+                {% for characteristic in characteristics_list %}
+	            <div class="b2-item"> 
+                    <div class="b2-img"> 
+                        <img src="{{ characteristic.image.url }}" alt="img">
+                    </div>
+					<p class="b2-txt">{{ characteristic.title }}</p>
+                    {% if request.user.is_superuser %}
+                        <a class="btn-admin" role="button"
+                           href="{% url 'admin:main_characteristics_change' characteristic.id %}"
+                           style="color: white;" target="_blank">
+                           <img src="{% static 'global/img/ico-admin.png' %}" alt="ico-admin">
+                        </a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div> 
+</section>
 
 <section id="b5" class="section">
     <div class="container">
@@ -129,50 +173,7 @@
     </div> 
 </section>
 
-<section id="b1">
-    <div class="b1-flex">
-	    <img class="b1-bg lazyload" data-src="{% static 'global/img/b1-bg-new.jpg' %}" alt="О НАШЕМ КЛУБЕ">
-        <div class="b1-content">
-            {% html_block index-about-txt %}
-		    <h2 class="title">О НАШЕМ КЛУБЕ</h2>
-			<p>«Новай Эволюция» – это первый современный фитнес-клуб нового формата, соответствующий требованиям и ожиданиям жителей самого динамично развивающегося района г. Рязани.</p><p>Наш клуб сочетает в себе максимально удобное расположение, комфортные условия для занятий, предлагает полный спектр фитнес-услуг на высоком уровне и предоставляет уникальную возможность погрузиться в атмосферу здорового образа жизни каждому человеку.</p><p>Философия нашего бренда заключается в том, что человек сам создает свою жизнь, а наш клуб и регулярные занятия в нем помогают сделать ее наполненной радостью, красотой, здоровьем и благополучием. Поэтому наш девиз звучит так: «Создай свое будущее».</p>	
-		    {% end_html_block %}
-        </div>
-		<div id="stats-counter">
-            <div class="stats-col">
-                <p class="stats-counter-value" data-count="1500">0</p>
-                <p class="stats-title">М<sup>2</sup></p>
-            </div>
-		</div>
-    </div> 
-</section>
-
-<section id="b2" class="section">
-    <img class="b2-bg lazyload" data-src="{% static 'global/img/b2-bg.jpg' %}" alt="ПРЕИМУЩЕСТВА">
-    <div class="container">
-	    <div class="b2-flex">
-	        <div class="b2-list">
-                {% for characteristic in characteristics_list %}
-	            <div class="b2-item"> 
-                    <div class="b2-img"> 
-                        <img src="{{ characteristic.image.url }}" alt="img">
-                    </div>
-					<p class="b2-txt">{{ characteristic.title }}</p>
-                    {% if request.user.is_superuser %}
-                        <a class="btn-admin" role="button"
-                           href="{% url 'admin:main_characteristics_change' characteristic.id %}"
-                           style="color: white;" target="_blank">
-                           <img src="{% static 'global/img/ico-admin.png' %}" alt="ico-admin">
-                        </a>
-                    {% endif %}
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div> 
-</section>
-
-<section id="b3" class="section">
+{% comment %} <section id="b3" class="section">
     <img class="b3-bg lazyload" data-src="{% static 'global/img/b3-bg.jpg' %}" alt="НАШИ ПРЕИМУЩЕСТВА">
     <div class="container">
 	    <h2 class="title">{% get_string_block "index-benefits-title" "НАШИ ПРЕИМУЩЕСТВА" %}</h2>
@@ -192,5 +193,5 @@
             {% endfor %}
         </div>
     </div> 
-</section>
+</section> {% endcomment %}
 {% endblock content %}
