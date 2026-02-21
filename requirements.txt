@@ -1,0 +1,9 @@
+Django==2.2.28
+django-admin-sortable==2.3
+django-ckeditor==6.3.2
+django-js-asset==1.2.3
+easy-thumbnails==2.7.2
+mysqlclient==2.1.1
+Pillow==7.2.0
+pytz==2023.3.post1
+sqlparse==0.4.4
